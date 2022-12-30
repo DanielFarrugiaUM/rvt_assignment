@@ -1,0 +1,16 @@
+[webPage]AUTOMATON::> webPage() STATE::>HomePage
+User logged out. logged_in = false
+[webPage]MOVED ON METHODCALL: void rvt_assignment.MarketAlertUmWebsite.loginPage() TO STATE::> LoginPage
+[webPage]AUTOMATON::> webPage() STATE::>LoginPage
+Valid login. logged_in = true
+[webPage]MOVED ON METHODCALL: void rvt_assignment.MarketAlertUmWebsite.goodLogin() TO STATE::> MyAlertsPage
+[webPage]AUTOMATON::> webPage() STATE::>MyAlertsPage
+User logged out. logged_in = false
+[webPage]MOVED ON METHODCALL: void rvt_assignment.MarketAlertUmWebsite.logout() TO STATE::> HomePage
+[webPage]AUTOMATON::> webPage() STATE::>HomePage
+User logged out when not logged in. logged_in = false
+[webPage]MOVED ON METHODCALL: void rvt_assignment.MarketAlertUmWebsite.logout() TO STATE::> !!!SYSTEM REACHED BAD STATE!!! BadState 
+aspects._asp_webTest0.ajc$before$aspects__asp_webTest0$7$3d89e7b7(_asp_webTest0.aj:66)
+rvt_assignment.MarketAlertUmWebsite.menuLoop(MarketAlertUmWebsite.java:120)
+rvt_assignment.MarketAlertUmWebsite.main(MarketAlertUmWebsite.java:130) 
+[webPage]AUTOMATON::> webPage() STATE::>BadState

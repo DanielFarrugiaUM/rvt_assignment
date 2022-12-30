@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% The following property checks whether the flow on the
+%% web-site is working is working as intended. That is:
+%% The user is only logged in with a correct Id; and that
+%% page redirects behave accordingly with respect to whether
+%% the use is logged in or not.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+GLOBAL{
+	VARIABLES{
+		boolean logged_in = false;
+	}
+	
+	EVENTS{
+		gotoHome() = {*.home()}
+		gotoMyAlerts() = {*.alerts()}
+		gotoLogin() = {*.loginPage()}
+		login() = {*.goodLogin()}
+		badLogin() = {*.badLogin()}
+		logout() = {*.logout()}
+	}
+	
+	PROPERTY webPage{
+		STATES{
+			BAD{
+				BadState
+			}
+			NORMAL{
+				MyAlertsPage
+				LoginPage
+			}
+			STARTING{
+				HomePage
+			}
+		}
+		
+		TRANSITIONS{
+			%% <state> -> <state> [<event>\<condition>\<action>]
+			%% <state> -> <state> [<event>\\<action>] use \ to omit condition
+			HomePage -> MyAlertsPage [gotoMyAlerts\logged_in==true\System.out.println("User went to My Alerts Page while logged in. logged_in = " + logged_in);]
+			HomePage -> LoginPage [gotoMyAlerts\logged_in==false\System.out.println("User went to My Alerts Page while logged out. Redirected to Login Page. logged_in = " + logged_in);]
+			LoginPage -> LoginPage [gotoMyAlerts\logged_in==false\System.out.println("User went to My Alerts Page while logged out. logged_in = " + logged_in);]
+			MyAlertsPage -> MyAlertsPage [gotoMyAlerts\\System.out.println("User went to My Alerts Page while logged in. logged_in = " + logged_in);]
+			
+			HomePage -> HomePage [gotoHome\\System.out.println("User went to Home Page. logged_in = " + logged_in);]
+			LoginPage -> HomePage [gotoHome\\System.out.println("User went to Home Page. logged_in = " + logged_in);]
+			MyAlertsPage -> HomePage [gotoHome\\System.out.println("User went to Home Page. logged_in = " + logged_in);]
+			
+			LoginPage -> LoginPage [badLogin\\System.out.println("Invalid login. logged_in = " + logged_in);]
+			LoginPage -> MyAlertsPage [login\\logged_in=true; System.out.println("Valid login. logged_in = " + logged_in);]
+			
+			HomePage -> BadState [logout\logged_in == false\System.out.println("User logged out when not logged in. logged_in = " + logged_in);]
+			MyAlertsPage -> BadState [logout\logged_in == false\System.out.println("User logged out when not logged in. logged_in = " + logged_in);]
+			HomePage -> HomePage [logout\\logged_in = false; System.out.println("User logged out. logged_in = " + logged_in);]
+			MyAlertsPage -> HomePage [logout\\logged_in = false; System.out.println("User logged out. logged_in = " + logged_in);]
+			
+			HomePage -> LoginPage [gotoLogin\logged_in == false\System.out.println("User logged out. logged_in = " + logged_in);]
+		}
+	}
+}
