@@ -1,21 +1,8 @@
 digraph _logic_webPage {
 rankdir=LR;
-node [shape = circle]; MyAlertsPage LoginPage HomePage;
-node [shape = octagon]; BadState;
+node [shape = circle]; ReplacingOldest AcceptingNew;
+node [shape = octagon]; LimitExeeded;
 node [shape = point]; _s_s;
-_s_s -> HomePage;
-HomePage -> MyAlertsPage [ label = "(1) gotoMyAlerts\\logged_in == true \\System . out . println ( \" User went to My Alerts Page while logged in. logged_in =  \" + logged_in ) ; "];
-HomePage -> LoginPage [ label = "(2) gotoMyAlerts\\logged_in == false \\System . out . println ( \" User went to My Alerts Page while logged out. Redirected to Login Page. logged_in =  \" + logged_in ) ; "];
-HomePage -> HomePage [ label = "(3) gotoHome\\\\System . out . println ( \" User went to Home Page. logged_in =  \" + logged_in ) ; "];
-HomePage -> BadState [ label = "(4) logout\\logged_in == false \\System . out . println ( \" User logged out when not logged in. logged_in =  \" + logged_in ) ; "];
-HomePage -> HomePage [ label = "(5) logout\\\\logged_in = false ; System . out . println ( \" User logged out. logged_in =  \" + logged_in ) ; "];
-HomePage -> LoginPage [ label = "(6) gotoLogin\\logged_in == false \\System . out . println ( \" User logged out. logged_in =  \" + logged_in ) ; "];
-MyAlertsPage -> MyAlertsPage [ label = "(1) gotoMyAlerts\\\\System . out . println ( \" User went to My Alerts Page while logged in. logged_in =  \" + logged_in ) ; "];
-MyAlertsPage -> HomePage [ label = "(2) gotoHome\\\\System . out . println ( \" User went to Home Page. logged_in =  \" + logged_in ) ; "];
-MyAlertsPage -> BadState [ label = "(3) logout\\logged_in == false \\System . out . println ( \" User logged out when not logged in. logged_in =  \" + logged_in ) ; "];
-MyAlertsPage -> HomePage [ label = "(4) logout\\\\logged_in = false ; System . out . println ( \" User logged out. logged_in =  \" + logged_in ) ; "];
-LoginPage -> LoginPage [ label = "(1) gotoMyAlerts\\logged_in == false \\System . out . println ( \" User went to My Alerts Page while logged out. logged_in =  \" + logged_in ) ; "];
-LoginPage -> HomePage [ label = "(2) gotoHome\\\\System . out . println ( \" User went to Home Page. logged_in =  \" + logged_in ) ; "];
-LoginPage -> LoginPage [ label = "(3) badLogin\\\\System . out . println ( \" Invalid login. logged_in =  \" + logged_in ) ; "];
-LoginPage -> MyAlertsPage [ label = "(4) login\\\\logged_in = true ; System . out . println ( \" Valid login. logged_in =  \" + logged_in ) ; "];
+_s_s -> AcceptingNew;
+AcceptingNew -> AcceptingNew [ label = "(1) uploadAlert\\alerts . length < 4 \\alerts [ index ] = r . getId ( ) ; index = ( index + 1 ) % 5 ; System . out . println ( \" Added alert with id:  \" + r . getId ( ) + \" . Number of alerts =  \" + alerts . length ) ; "];
 }

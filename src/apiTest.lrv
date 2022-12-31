@@ -1,0 +1,114 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% The following property checks whether the flow on the
+%% the API is correct. This means that: 
+%% 1. when at 5 alerts, the oldest is replaced with the newest, and
+%% 2. when purge is called, all alerts are wiped.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+IMPORTS{
+	import rvt_assignment.models.*;
+	import java.util.ArrayList;
+	import java.util.List;
+	import rvt_assignment.utils.*;
+	import com.mashape.unirest.http.exceptions.UnirestException;
+}
+
+GLOBAL{
+	VARIABLES{
+		List<String> alerts;
+		ApiChecker checker = new ApiChecker(new MarketAlertClient());
+	}
+	
+	EVENTS{
+		uploadAlert(UploadAlertResponse r) = {*.postAlert()uponReturning(r)}
+		purgeAlerts() = {MarketAlertUmAPI.purgeAlerts()}
+	}
+	
+	PROPERTY api{
+		STATES{
+			BAD{
+				LimitExeeded
+			}
+			NORMAL{
+				ReplacingOldest
+			}
+			STARTING{
+				AcceptingNew
+			}
+		}
+		
+		TRANSITIONS{
+			%% uploadAlert
+			AcceptingNew -> AcceptingNew [
+				uploadAlert\alerts.size() < 4\
+				try{
+					alerts = getAlertIdsFromAPI();
+				}catch(UnirestException e){}
+				System.out.println("Added alert with id: " + r.getId() + ". Number of alerts = " + alerts.size());
+			]
+			AcceptingNew -> ReplacingOldest [
+				uploadAlert\alerts.size() == 4\
+				try{
+					alerts = getAlertIdsFromAPI();
+				}catch(UnirestException e){}
+				System.out.println("Added alert with id: " + r.getId() + ". Number of alerts = " + alerts.size());
+			]
+			AcceptingNew -> LimitExeeded [
+				uploadAlert\alerts.size() > 5\
+				try{
+					alerts = getAlertIdsFromAPI();
+				}catch(UnirestException e){}
+				System.out.println("Added alert with id: " + r.getId() + ". Number of alerts = " + alerts.size());
+			]
+			ReplacingOldest -> LimitExeeded [
+				uploadAlert\alerts.size() > 5\
+				try{
+					alerts = getAlertIdsFromAPI();
+				}catch(UnirestException e){}
+				System.out.println("Added alert with id: " + r.getId() + ". Number of alerts = " + alerts.size());
+			]
+			ReplacingOldest -> ReplacingOldest [
+				uploadAlert\\
+				try{
+					alerts = getAlertIdsFromAPI();
+				}catch(UnirestException e){}
+				System.out.println("Added alert with id: " + r.getId() + ". Number of alerts = " + alerts.size());
+			]
+			%% purge Alert
+			AcceptingNew -> AcceptingNew [
+				purgeAlerts\\
+				try{
+					alerts = getAlertIdsFromAPI();
+				}catch(UnirestException e){};
+				System.out.println("Purged Alerts. Number of alerts = " + alerts.size());
+			]
+			ReplacingOldest -> AcceptingNew [
+				purgeAlerts\\
+				try{
+					alerts = getAlertIdsFromAPI();
+				}catch(UnirestException e){}
+				System.out.println("Purged Alerts. Number of alerts = " + alerts.size());
+			]
+			
+		}
+	}
+}
+
+METHODS{
+	
+	List<String> getAlertIdsFromAPI()throws UnirestException{
+		ArrayList<MarketAlertEvent> log = checker.getEventsLog();
+		if(log.size() == 0) return new ArrayList<String>();
+	    MarketAlertEvent eventData = log.get(0);
+	    int eventLogType = eventData.getEventLogType();
+	    List<UploadAlertResponse> alertsOnServer
+	            = eventData.getSystemState().getAlerts();
+	    List<String> alertIds = new ArrayList();
+	    for(UploadAlertResponse r: alertsOnServer){
+	    	alertIds.add(r.getId());
+	    }
+	    return alertIds;
+	}
+	
+}

@@ -13,7 +13,6 @@ import rvt_assignment.Constants;
 import java.util.concurrent.TimeUnit;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.time.Duration;
 
 public class MarketAlertUmWebsite {
 

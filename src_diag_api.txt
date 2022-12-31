@@ -1,0 +1,14 @@
+digraph _logic_api {
+rankdir=LR;
+node [shape = circle]; ReplacingOldest AcceptingNew;
+node [shape = octagon]; LimitExeeded;
+node [shape = point]; _s_s;
+_s_s -> AcceptingNew;
+ReplacingOldest -> LimitExeeded [ label = "(1) uploadAlert\\alerts . size ( ) > 5 \\try { alerts = getAlertIdsFromAPI ( ) ; } catch ( UnirestException e ) { } System . out . println ( \" Added alert with id:  \" + r . getId ( ) + \" . Number of alerts =  \" + alerts . size ( ) ) ; "];
+ReplacingOldest -> ReplacingOldest [ label = "(2) uploadAlert\\\\try { alerts = getAlertIdsFromAPI ( ) ; } catch ( UnirestException e ) { } System . out . println ( \" Added alert with id:  \" + r . getId ( ) + \" . Number of alerts =  \" + alerts . size ( ) ) ; "];
+ReplacingOldest -> AcceptingNew [ label = "(3) purgeAlerts\\\\try { alerts = getAlertIdsFromAPI ( ) ; } catch ( UnirestException e ) { } System . out . println ( \" Purged Alerts. Number of alerts =  \" + alerts . size ( ) ) ; "];
+AcceptingNew -> AcceptingNew [ label = "(1) uploadAlert\\alerts . size ( ) < 4 \\try { alerts = getAlertIdsFromAPI ( ) ; } catch ( UnirestException e ) { } System . out . println ( \" Added alert with id:  \" + r . getId ( ) + \" . Number of alerts =  \" + alerts . size ( ) ) ; "];
+AcceptingNew -> ReplacingOldest [ label = "(2) uploadAlert\\alerts . size ( ) == 4 \\try { alerts = getAlertIdsFromAPI ( ) ; } catch ( UnirestException e ) { } System . out . println ( \" Added alert with id:  \" + r . getId ( ) + \" . Number of alerts =  \" + alerts . size ( ) ) ; "];
+AcceptingNew -> LimitExeeded [ label = "(3) uploadAlert\\alerts . size ( ) > 5 \\try { alerts = getAlertIdsFromAPI ( ) ; } catch ( UnirestException e ) { } System . out . println ( \" Added alert with id:  \" + r . getId ( ) + \" . Number of alerts =  \" + alerts . size ( ) ) ; "];
+AcceptingNew -> AcceptingNew [ label = "(4) purgeAlerts\\\\try { alerts = getAlertIdsFromAPI ( ) ; } catch ( UnirestException e ) { } ; System . out . println ( \" Purged Alerts. Number of alerts =  \" + alerts . size ( ) ) ; "];
+}

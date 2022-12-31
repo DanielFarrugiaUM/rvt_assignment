@@ -1,0 +1,42 @@
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Purged Alerts. Number of alerts = 0
+[api]MOVED ON METHODCALL: boolean rvt_assignment.MarketAlertUmAPI.purgeAlerts() TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Purged Alerts. Number of alerts = 0
+[api]MOVED ON METHODCALL: HttpResponse rvt_assignment.interfaces.IAlertClient.purgeAlerts() TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Added alert with id: 7076ac81-e856-44c9-bd39-f64b2223d2fb. Number of alerts = 1
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Added alert with id: 747d02ce-ad6c-465b-bc96-c6a9fe3118a1. Number of alerts = 2
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Purged Alerts. Number of alerts = 0
+[api]MOVED ON METHODCALL: boolean rvt_assignment.MarketAlertUmAPI.purgeAlerts() TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Purged Alerts. Number of alerts = 0
+[api]MOVED ON METHODCALL: HttpResponse rvt_assignment.interfaces.IAlertClient.purgeAlerts() TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Added alert with id: 9b6fa604-f9fa-437f-94d1-768ccacb8d68. Number of alerts = 0
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Added alert with id: 231d5741-a0bb-43ca-8a7c-e00a7aa5456a. Number of alerts = 2
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Added alert with id: 277550ac-a6fa-4d06-8b45-064a0c784113. Number of alerts = 3
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Added alert with id: 0adf46d1-09f2-4e75-977e-56a879dbaa84. Number of alerts = 4
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> AcceptingNew
+[api]AUTOMATON::> api() STATE::>AcceptingNew
+Added alert with id: a538109b-a6f8-4f59-b2ac-f863ee9d789e. Number of alerts = 5
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> ReplacingOldest
+[api]AUTOMATON::> api() STATE::>ReplacingOldest
+Added alert with id: c10222c4-2fca-43bb-b3e1-d3943b8b1ba0. Number of alerts = 6
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> ReplacingOldest
+[api]AUTOMATON::> api() STATE::>ReplacingOldest
+Added alert with id: 9394757f-9cfd-45eb-8da2-dc0a5a5eda78. Number of alerts = 7
+[api]MOVED ON METHODCALL: UploadAlertResponse rvt_assignment.MarketAlertUmAPI.postAlert(Alert) TO STATE::> !!!SYSTEM REACHED BAD STATE!!! LimitExeeded 
+aspects._asp_apiTest0.ajc$afterReturning$aspects__asp_apiTest0$2$4984d21d(_asp_apiTest0.aj:28)
+rvt_assignment.MarketAlertUmAPI.menuLoop(MarketAlertUmAPI.java:83)
+rvt_assignment.MarketAlertUmAPI.main(MarketAlertUmAPI.java:108) 
